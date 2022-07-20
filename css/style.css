@@ -1,0 +1,23 @@
+.container{
+    border: 1px solid grey;
+    border-radius: 10px;
+    width: 95%;
+    padding: 1% 1% 1% 1%;
+    box-shadow: 0 0 5px 2px rgb(0 0 0 / 50%);
+    min-height: 600px;
+}
+
+.add-button {
+    float: right;
+    width: 100%;
+}
+
+.btn {
+    width: 100%;
+}
+
+.food-bank-modal-item-delete-row{
+    cursor: pointer;
+    margin-top: 11px;
+    margin-left: -10px;
+}

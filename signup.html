@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <title>Create Account</title>
+    <link rel="stylesheet" href="css/user.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $("#signup").click(function(e){
+                e.preventDefault();
+                name = $("#name").val().trim();
+                phone = $("#phone-number").val().trim();
+                secPhone = $("#sec-phone-number").val().trim();
+                password = $("#password").val().trim();
+                confPassword = $("#conf-password").val().trim();
+
+                if(name == "" ||  phone == "" || password == "" || confPassword == ""){
+                    alert("Please fill all required fields");
+                    return false;
+                }
+
+                if(confPassword !== password){
+                    alert("Password doesn't match")
+                    return false;
+                }
+
+                data = {name : name,phone : phone,secPhone : secPhone,password : password};
+
+                $.ajax({
+                    url : 'api/signup.php',
+                    method : "POST",
+                    data : data
+                }).done(function(data){
+                    console.log(data, typeof data);
+                    data = JSON.parse(data);
+                    if(data.result){
+                        location.href = 'index.html'
+                    }
+                    else{
+                        if(data.error == "already_exist"){
+                            alert("Phone number already exist");
+                        }
+                        else{
+                            alert("Operation failed. Please try again")
+                        }
+                        
+                    }
+                }).fail(function(){
+                    alert("Operation failed. Please try again");
+                })
+
+            })
+        })
+    </script>
+</head>
+
+<div class="signup-page">
+    <div class="form">
+        <form class="signup-form" style="margin-top: 10px;">
+            <input type="text" id="name" placeholder="Name" />
+            <input type="text" id="phone-number" placeholder="Phone Number" />
+            <input type="text" id="sec-phone-number" placeholder="Secondary Phone Number (Optional)" />
+            <input type="password" id="password" placeholder="Password" />
+            <input type="password" id="conf-password" placeholder="Confirm Password" />
+            <button id="signup">Create Account</button>
+            <p class="message">Already a member? <a href="index.html">Login</a></p>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>
